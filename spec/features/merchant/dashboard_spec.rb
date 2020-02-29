@@ -62,5 +62,14 @@ RSpec.describe 'Merchant Dashboard' do
 
       expect(current_path).to eq("/merchant/orders/#{@order_2.id}")
     end
+
+    it 'I can see a link to the discounts index page' do
+      visit "/merchant"
+
+      click_on "Discount Index"
+      save_and_open_page
+      expect(current_path).to eq("/merchant/discounts")
+      expect(page).to have_content("Discounts Index Page")
+    end
   end
 end
