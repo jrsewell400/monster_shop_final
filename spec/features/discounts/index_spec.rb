@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Discount Index Page", type: :feature do 
-  describe "when I visit the discount index page" do 
+  describe "- when I visit the discount index page" do 
     it "I see individual discounts for that merchant." do 
       merchant_1 = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
       merchant_2 = Merchant.create!(name: 'Brians Bagels', address: '125 Main St', city: 'Denver', state: 'CO', zip: 80218)
