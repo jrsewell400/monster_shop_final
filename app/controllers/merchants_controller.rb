@@ -11,8 +11,11 @@ class MerchantsController < ApplicationController
   end
 
   def create
-    merchant = Merchant.new(merchant_params)
-    if merchant.save
+    if field_empty?
+      merchant = Merchant.new(merchant_params)
+      flash[:error] = "Please fill in all fields in order to create a discount."
+      redirect_to new_merchant_discounts_path
+    elsif merchant.save
       redirect_to '/merchants'
     else
       generate_flash(merchant)
