@@ -49,8 +49,8 @@ RSpec.describe "Create New Discount" do
       fill_in 'Discount Amount', with: 0.15
       click_button 'Create Discount'
 
-      expect(current_path).to eq(merchant_discounts_path)
-      expect(page).to have_content("name: [\"can't be blank\"]")
+      expect(current_path).to eq(new_merchant_discount_path)
+      expect(page).to have_content("Please fill in all fields in order to create a discount.")
     end
 
     it "then I enter a non-unique discount amount and get an error on name and discount amount." do 
