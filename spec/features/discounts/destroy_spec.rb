@@ -12,9 +12,9 @@ RSpec.describe "Discount Destroy Spec", type: :feature do
       ten_percent = merchant_1.discounts.create!(name: "10% Discount", description: "This discount applies once item quantity reaches 10 and remains until quantity reaches 15.", discount_amt: 0.1, req_qty: 5)
 
       visit merchant_discounts_path 
-
+      
       expect(page).to have_link("10% Discount")
-
+      
       within "#discount-#{ten_percent.id}" do
         click_link "Delete Discount"
       end 
