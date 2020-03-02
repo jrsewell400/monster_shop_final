@@ -32,6 +32,20 @@ class Merchant::DiscountsController < Merchant::BaseController
     redirect_to merchant_discounts_path
   end
 
+  def edit 
+    @discount = Discount.find(params[:id])
+  end
+
+  def update
+    discount = Discount.find(params[:id])
+    if discount.update(discount_params)
+      redirect_to merchant_discounts_path
+    else 
+      generate_flash(discount)
+      render :edit
+    end 
+  end 
+
   private
 
   def discount_params
