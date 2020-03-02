@@ -1,0 +1,17 @@
+<h2>Create New Discount</h2>
+
+<%= form_tag merchant_discounts_path(@discount), method: :post do %>
+  <%= label_tag :name %>
+  <%= text_field_tag :name %></br>
+
+  <%= label_tag :description %>
+  <%= text_field_tag :description %></br>
+
+  <%= label_tag :discount_amt, "Discount Amount" %>
+  <%= text_field_tag :discount_amt %></br>
+
+  <%= label_tag :req_qty, "Required Quantity" %>
+  <%= text_field_tag :req_qty %></br>
+
+  <%= submit_tag 'Create Discount' %>
+<% end %>
