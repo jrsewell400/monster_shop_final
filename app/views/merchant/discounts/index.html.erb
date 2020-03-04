@@ -3,7 +3,8 @@
 <% @discounts.each do |discount| %>
   <section id="discount-<%= discount.id %>">
     <h2><%= link_to discount.name, "/merchant/discounts/#{discount.id}" %></h2>
-    <%= link_to "Delete Discount", "/merchant/discounts/#{discount.id}", method: :delete %></br></br>
+    <%= link_to "Delete Discount", "/merchant/discounts/#{discount.id}", method: :delete %></br>
+    <%= link_to "Edit Discount", "/merchant/discounts/#{discount.id}/edit" %></br>
   </section>
 <% end %></br></br>
 
