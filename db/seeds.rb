@@ -32,7 +32,7 @@ brian_shop.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, 
 
 #discounts
 five_percent = megan_shop.discounts.create!(name: "5% Discount", description: "This discount applies once item quantity reaches 5 and remains until quantity reaches 10.", discount_amt: 0.05, req_qty: 5)
-ten_percent = megan_shop.discounts.create!(name: "10% Discount", description: "This discount applies once item quantity reaches 10 and remains until quantity reaches 15.", discount_amt: 0.1, req_qty: 5)
+ten_percent = megan_shop.discounts.create!(name: "10% Discount", description: "This discount applies once item quantity reaches 10 and remains until quantity reaches 15.", discount_amt: 0.1, req_qty: 10)
 
 seven_percent = brian_shop.discounts.create!(name: "7% Discount", description: "This discount applies once item quantity reaches 7 and remains until quantity reaches 17.", discount_amt: 0.07, req_qty: 7)
 eleven_percent = brian_shop.discounts.create!(name: "11% Discount", description: "This discount applies once item quantity reaches 11 and remains until quantity reaches 21.", discount_amt: 0.11, req_qty: 11)
