@@ -9,6 +9,8 @@
 
 # Ignore all logfiles and tempfiles.
 coverage
+coverage/*
+DS_Store
 /log/*
 /tmp/*
 !/log/.keep
