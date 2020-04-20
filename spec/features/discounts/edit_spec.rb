@@ -62,10 +62,13 @@ RSpec.describe "Edit Discount", type: :feature do
       fill_in 'Discount Amount', with: 0.99
       fill_in 'Required Quantity', with: 99
       click_button 'Edit Discount'
-
-      five_percent.reload
+      
+      visit "/merchant/discounts/#{five_percent.id}"
 
       expect(page).to have_content("99% Discount")
+      expect(page).to have_content("This discount applies once item quantity reaches 99.")
+      expect(page).to have_content("This discount applies once item quantity reaches 99.")
+      expect(page).to have_content("This discount applies once item quantity reaches 99.")
       expect(page).to_not have_content("5% Discount")
     end 
   end 
