@@ -28,7 +28,7 @@ class Merchant::DiscountsController < Merchant::BaseController
 
   def destroy
     discount = Discount.find(params[:id]).destroy
-    flash[:notice] = "#{discount.name} has been removed from discounts."
+    flash[:success] = "#{discount.name} has been removed from discounts."
     redirect_to merchant_discounts_path
   end
 
