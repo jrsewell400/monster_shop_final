@@ -19,13 +19,20 @@ RSpec.describe Item do
   describe 'Instance Methods' do
     before :each do
       @megan = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
+      @user = User.create!(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword')
       @ogre = @megan.items.create!(name: 'Ogre', description: "I'm an Ogre!", price: 20, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
       @giant = @megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 20, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
+      @dog = @megan.items.create!(name: 'Dog', description: "I'm a Dog!", price: 40, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
+      @dog2 = @megan.items.create!(name: 'Dog2', description: "I'm a Dog2!", price: 40, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 10 )
       @review_1 = @ogre.reviews.create(title: 'Great!', description: 'This Ogre is Great!', rating: 5)
       @review_2 = @ogre.reviews.create(title: 'Meh.', description: 'This Ogre is Mediocre', rating: 3)
       @review_3 = @ogre.reviews.create(title: 'EW', description: 'This Ogre is Ew', rating: 1)
       @review_4 = @ogre.reviews.create(title: 'So So', description: 'This Ogre is So so', rating: 2)
       @review_5 = @ogre.reviews.create(title: 'Okay', description: 'This Ogre is Okay', rating: 4)
+      @five_percent = @megan.discounts.create!(name: "5% Discount", description: "This is a 5% discount", discount_amt: 0.05, req_qty: 5)
+      @ten_percent = @megan.discounts.create!(name: "10% Discount", description: "This is a 10% discount", discount_amt: 0.1, req_qty: 10)
+      @order_1 = @user.orders.create!
+      @order_item = @order_1.order_items.create!(item: @dog, price: @dog.price, quantity: 5)
     end
 
     it '.sorted_reviews()' do
@@ -36,6 +43,20 @@ RSpec.describe Item do
 
     it '.average_rating' do
       expect(@ogre.average_rating.round(2)).to eq(3.00)
+    end
+
+    it ".apply_discount?" do 
+      expect(@dog.apply_discount?(1)).to eq(false)
+      expect(@dog.apply_discount?(5)).to eq(true)
+    end 
+
+    it ".merchant_discount" do 
+      expect(@dog.merchant_discount(5)).to eq(@five_percent.discount_amt)
+      expect(@dog2.merchant_discount(10)).to eq(@ten_percent.discount_amt)
+    end
+
+    it ".discount_price" do 
+      expect(@dog.discount_price(5)).to eq(190)
     end
   end
 
