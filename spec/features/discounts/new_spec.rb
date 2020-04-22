@@ -2,15 +2,14 @@ require 'rails_helper'
 
 RSpec.describe "Create New Discount" do 
   describe "- when I go to the discounts index page and click on Create New Discount" do 
+    before :each do 
+      @merchant_1 = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
+      @m_user = @merchant_1.users.create!(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, role: 1, email: 'merchant_megan@example.com', password: 'password')
+      @ten_percent = @merchant_1.discounts.create!(name: "10% Discount", description: "This discount applies once item quantity reaches 10 and remains until quantity reaches 15.", discount_amt: 0.1, req_qty: 10)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@m_user)
+    end
+
     it "then I am taken to a page where I can create a new discount." do 
-      merchant_1 = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
-      
-      m_user = merchant_1.users.create!(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, role: 1, email: 'merchant_megan@example.com', password: 'password')
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(m_user)
-
-      five_percent = merchant_1.discounts.create!(name: "5% Discount", description: "This discount applies once item quantity reaches 5 and remains until quantity reaches 10.", discount_amt: 0.05, req_qty: 5)
-      ten_percent = merchant_1.discounts.create!(name: "10% Discount", description: "This discount applies once item quantity reaches 10 and remains until quantity reaches 15.", discount_amt: 0.1, req_qty: 5)
-
       visit merchant_discounts_path
 
       click_link "Create New Discount"
@@ -32,14 +31,6 @@ RSpec.describe "Create New Discount" do
     end 
 
     it "then I don't fill in all the fields and get a error flash message." do
-      merchant_1 = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
-      
-      m_user = merchant_1.users.create!(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, role: 1, email: 'merchant_megan@example.com', password: 'password')
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(m_user)
-
-      five_percent = merchant_1.discounts.create!(name: "5% Discount", description: "This discount applies once item quantity reaches 5 and remains until quantity reaches 10.", discount_amt: 0.05, req_qty: 5)
-      ten_percent = merchant_1.discounts.create!(name: "10% Discount", description: "This discount applies once item quantity reaches 10 and remains until quantity reaches 15.", discount_amt: 0.1, req_qty: 5)
-
       visit merchant_discounts_path
 
       click_link "Create New Discount"
@@ -54,14 +45,6 @@ RSpec.describe "Create New Discount" do
     end
 
     it "then I enter a non-unique discount amount and get an error on name and discount amount." do 
-      merchant_1 = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
-      
-      m_user = merchant_1.users.create!(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, role: 1, email: 'merchant_megan@example.com', password: 'password')
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(m_user)
-
-      five_percent = merchant_1.discounts.create!(name: "5% Discount", description: "This discount applies once item quantity reaches 5 and remains until quantity reaches 10.", discount_amt: 0.05, req_qty: 5)
-      ten_percent = merchant_1.discounts.create!(name: "10% Discount", description: "This discount applies once item quantity reaches 10 and remains until quantity reaches 15.", discount_amt: 0.1, req_qty: 10)
-
       visit merchant_discounts_path
 
       click_link "Create New Discount"
