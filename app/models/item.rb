@@ -4,11 +4,7 @@ class Item < ApplicationRecord
   has_many :orders, through: :order_items
   has_many :reviews, dependent: :destroy
 
-  validates_presence_of :name,
-                        :description,
-                        :image,
-                        :price,
-                        :inventory
+  validates_presence_of :name, :description, :image, :price, :inventory
 
   def self.active_items
     where(active: true)
@@ -29,4 +25,20 @@ class Item < ApplicationRecord
   def average_rating
     reviews.average(:rating)
   end
+
+  def apply_discount?(qty)
+    !merchant.discounts.where("#{qty} >= discounts.req_qty").empty?
+  end
+
+  def merchant_discount(qty)
+    merchant.discounts.where("#{qty} >= discounts.req_qty").order(discount_amt: :desc).first.discount_amt
+  end
+
+  def discount_price(qty)
+    (price * qty) - ((price * merchant_discount(qty)) * qty)
+  end
+
+  def discount_order_price(qty)
+    price - (price * merchant_discount(qty))
+  end 
 end
